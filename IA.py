@@ -8,7 +8,7 @@ class Perceptron():
     def __init__ (self, layers: tuple, learning_rate: float = 0.4):
 
         pattern = [(a, b) for a, b in zip(layers[:-1], layers[1:])]
-        self.weigths = [np.random.rand(*a) for a in pattern]
+        self.weigths = [np.random.randn(*a) for a in pattern]
         self.layers_shape = layers
         self.weigths_shape = pattern
 
@@ -29,9 +29,9 @@ class Perceptron():
 
         layers_result = [np.array(feed)]
 
-        for layer in self.weigths:
+        for layer in range(len(self.weigths_shape)):
 
-            result = np.dot(np.transpose(layer), layers_result[-1])
+            result = np.dot(np.transpose(self.weigths[layer]), layers_result[-1])
             result = self._sigmoid(result)
             
             layers_result.append(result)
@@ -57,4 +57,3 @@ class Perceptron():
 
         for n in range(len(inputs)):
             self.back_propagation(inputs[n], correct_outputs[n])
-
